@@ -4,7 +4,14 @@ package mock;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class SecurityCenterTest {
     /* 需求描述：
     编写SecurityCenter类的单元测试
@@ -12,31 +19,10 @@ public class SecurityCenterTest {
     close方法以确定其可以运行。
     * */
 
-    //Mock doorPanel -> 不使用doorPanels
-    class MockDoorPanel extends DoorPanel {
-        private boolean isCalled = false;
-
-        void close() {
-            isCalled = true;
-        }
-
-        boolean getCalled() {
-            return isCalled == true;
-        }
-    }
-
-    private MockDoorPanel mock;
-    private SecurityCenter securityCenter;
-
-    @BeforeEach
-    public void setUp() {
-        mock = new MockDoorPanel();
-        securityCenter = new SecurityCenter(mock);
-    }
-
+    
     @Test
     public void shouldVerifyDoorIsClosed() {
+        Mockito.verify(doorPanel).close();
         securityCenter.switchOn();
-        Assertions.assertEquals(true, mock.getCalled());
     }
 }
