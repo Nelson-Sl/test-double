@@ -19,6 +19,11 @@ public class SecurityCenterTest {
     close方法以确定其可以运行。
     * */
 
+    @Mock
+    private DoorPanel doorPanel;
+
+    @InjectMocks
+    private SecurityCenter securityCenter;
     
     @Test
     public void shouldVerifyDoorIsClosed() {
